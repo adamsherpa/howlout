@@ -1,14 +1,14 @@
-import path from 'path';
-import { createServer } from 'http';
-import express from 'express';
-import { Server } from 'socket.io';
+const express = require('express');
 
-// invoke express server
 const app = express();
-// create a server
-const server = createServer(app);
-// attach the server to socketio
-const io = new Server(server);
+const PORT = 3000;
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
+// controller import
+const auth = require('./middleware/auth');
+
+app.use(express.json());
 
 io.on('connection', (socket) => {
   console.log('a user connected');
@@ -17,37 +17,26 @@ io.on('connection', (socket) => {
   });
 });
 
-// serve static files
-app.use(express.static(path.join(__dirname, '../dist')));
-
-// serve index.html
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../dist/index.html'));
+app.post('/login', auth.login, (req, res, next) => {
+  console.log(req.body);
+  if (res.locals.authData.code !== 200) {
+    return next({
+      log: res.locals.authData.message,
+      message: res.locals.authData.data.message,
+    });
+  }
+  return res.status(200).json({ message: 'Login successful' });
 });
 
-// auth
-app.post('/auth', (req, res) => res.status(200).send('auth'));
+app.post('/signup', auth.signup, (req, res, next) => {
+  console.log(res.locals.record);
+  return res.status(200).json({ message: 'Signup successful' });
+});
 
-// rouge endpoint catcher
 app.use((req, res) => {
-  res.status(404).send('404: Page not Found');
+  res.status(404).json({ message: 'Not Found' });
 });
 
-app.use((err, req, res) => {
-  // err template
-  const defaultErr = {
-    log: 'Express error handler caught unknown middleware error',
-    status: 400,
-    message: { err: 'An error occurred' },
-  };
-
-  const errorObj = { ...defaultErr, ...err };
-
-  // log error
-  console.error(errorObj.log);
-
-  return res.status(errorObj.status).json(errorObj.message);
+server.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
 });
-
-// start server
-io.listen(3000);

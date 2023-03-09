@@ -1,11 +1,11 @@
 {
   "name": "howlout",
   "version": "1.0.0",
-  "main": "./src/index.jsx",
   "license": "MIT",
   "scripts": {
-    "build:style": "npx tailwind build src/index.css -o src/css/index.css",
-    "start": "webpack-dev-server .",
+    "build:style": "npx tailwind build src/index.css -o src/styles/index.css",
+    "start": "webpack-dev-server",
+    "serve": "nodemon server/server.js",
     "build": "NODE_ENV='production' webpack",
     "test": "jest",
     "lint": "eslint --fix --ext .tsx,.js,.jsx src tests",
@@ -32,6 +32,7 @@
     "identity-obj-proxy": "^3.0.0",
     "import-local": "^3.1.0",
     "mini-css-extract-plugin": "^2.7.3",
+    "nodemon": "^2.0.21",
     "postcss": "^8.4.21",
     "postcss-cli": "^10.1.0",
     "postcss-import": "^15.1.0",
