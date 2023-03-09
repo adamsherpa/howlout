@@ -1,4 +1,5 @@
-node_modules
+/node_modules/
 coverage
 yarn.lock
-dist
+/dist
+/notes.md
