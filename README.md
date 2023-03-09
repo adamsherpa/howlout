@@ -1,15 +1,46 @@
-# React + TypeScript + TailwindCSS + PurgeCSS + Webpack boilerplate project
+# Readme
 
-- **React** is a JavaScript library for building user interfaces https://reactjs.org/
-- **TypeScript** is a typed superset of JavaScript that compiles to plain JavaScript. https://www.typescriptlang.org/
-- **TailwindCSS** is a low-level CSS framework that gives you all of the building blocks you need https://tailwindcss.com/
-- **PurgeCSS** is a tool to remove unused CSS. https://www.purgecss.com/
-- **Webpack** is a module bundler capable of transforming, bundling, or packaging just about any resource or asset. https://webpack.js.org/
+## Database ER
 
-**!** Edit `tailwind.config.js` to style up aplication theme. When done, do not forget `yarn build:style` to recompile app styles
+## Midjourney Settings
 
-run `yarn start` to open app in dev server
+- Assets
+  - `/imagine icons, animals, cute, mockup, illustrator, vector, white background, --v 4 --style 4b`
 
-run `yarn build` to build app
+- Background
+  - `/imagine trees, forest, lush, dew, mobile wallpaper, mockup, illustrator, vector, figma, --v 4 --style 4b`
 
-run `yarn test` to run unit tests
+## Pocketbase
+
+- user: admin@howlout.com
+- pass: password123
+- Notes
+  - Maybe i dont want to do pocketbase and I should focus more on either sql, firebase, or mongo
+
+##
+
+```mermaid
+  erDiagram
+    USER||--|{MESSAGE : shout
+    MESSAGE}|--||CHATROOM : group
+
+    USER {
+      string user_id pk
+      string username
+      string email
+      string password
+    }
+
+    MESSAGE {
+      string message_id pk
+      number user_id fk
+      string room_id fk
+      string message_content
+      date timestamp
+    }
+
+    CHATROOM {
+      string room_id pk
+      date timestamp
+    }
+```
