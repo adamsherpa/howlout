@@ -1,7 +1,6 @@
 import React from 'react';
 import { Navbar, Dropdown, Avatar } from 'flowbite-react';
 import logo from '../../public/logo.png';
-import AuthContext from '../contexts/AuthContext';
 
 // add state for login component
 // cange name
